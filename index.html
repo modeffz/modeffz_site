@@ -55,9 +55,42 @@
             border-radius: 5px 5px 0 0;
             background-color: #3d3d3d;
         }
+
+        /* Стили для переключателя темы */
+        .theme-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .theme-switch button {
+            padding: 10px 20px;
+            background-color: #2d2d2d;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Tanada Blood', cursive;
+        }
+        
+        .theme-switch button:hover {
+            background-color: #3d3d3d;
+        }
     </style>
 </head>
 <body>
+    <!--<div class="theme-switch">
+        <button onclick="toggleTheme()">Сменить тему</button>
+    </div>-->
+    
+    <nav>
+        <ul>
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="gallery.html">Галерея</a></li>
+        </ul>
+    </nav>
+
     <!-- Шапка с именем -->
     <header>
         <h1>modeffz</h1>
@@ -172,6 +205,25 @@
                 const skillItem = button.closest('.skill-item');
                 skillItem.classList.toggle('active');
             });
+        });
+
+        function toggleTheme() {
+            const body = document.body;
+            if (body.getAttribute('data-theme') === 'light') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Загрузка сохраненной темы
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.setAttribute('data-theme', 'light');
+            }
         });
     </script>
 </body>
