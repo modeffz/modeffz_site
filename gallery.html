@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>modeffz gallery</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="https://github.com/modeffz.png" type="image/x-icon">
     <style>
         @font-face {
             font-family: 'Tanada Blood';
@@ -25,23 +26,77 @@
     <section>
         <h2>Артики</h2>
         <div class="gallery">
-            <img src="images/1.png" alt="Артик 1">
-            <img src="images/2.png" alt="Артик 2">
-            <img src="images/3.png" alt="Артик 3">
-            <img src="images/4.png" alt="Артик 4">
-            <img src="images/5.png" alt="Артик 5">
-            <img src="images/6.png" alt="Артик 6">
-            <img src="images/7.png" alt="Артик 7">
-            <img src="images/8.png" alt="Артик 8">
-            <img src="images/9.png" alt="Артик 9">
-            <img src="images/10.png" alt="Артик 10">
-            <img src="images/11.png" alt="Артик 11">
-            <img src="images/12.png" alt="Артик 12">
-            <img src="images/13.png" alt="Артик 13">
-            <img src="images/14.png" alt="Артик 14">
-            <img src="images/15.png" alt="Артик 15">
+            <img src="images/1.png" alt="Артик 1" class="zoom-image">
+            <img src="images/2.png" alt="Артик 2" class="zoom-image">
+            <img src="images/3.png" alt="Артик 3" class="zoom-image">
+            <img src="images/4.png" alt="Артик 4" class="zoom-image">
+            <img src="images/5.png" alt="Артик 5" class="zoom-image">
+            <img src="images/6.png" alt="Артик 6" class="zoom-image">
+            <img src="images/7.png" alt="Артик 7" class="zoom-image">
+            <img src="images/8.png" alt="Артик 8" class="zoom-image">
+            <img src="images/9.png" alt="Артик 9" class="zoom-image">
+            <img src="images/10.png" alt="Артик 10" class="zoom-image">
+            <img src="images/11.png" alt="Артик 11" class="zoom-image">
+            <img src="images/12.png" alt="Артик 12" class="zoom-image">
+            <img src="images/13.png" alt="Артик 13" class="zoom-image">
+            <img src="images/14.png" alt="Артик 14" class="zoom-image">
+            <img src="images/15.png" alt="Артик 15" class="zoom-image">
         </div>
     </section>
-    
+    <script>
+        document.querySelectorAll('.zoom-image').forEach(image => {
+            image.addEventListener('click', function() {
+                if (this.classList.contains('zoomed')) {
+                    closeZoom(this);
+                } else {
+                    openZoom(this);
+                }
+            });
+        });
+
+        function openZoom(image) {
+            // Создаем оверлей
+            const overlay = document.createElement('div');
+            overlay.className = 'overlay';
+            document.body.appendChild(overlay);
+
+            // Добавляем кнопку закрытия
+            const closeButton = document.createElement('button');
+            closeButton.className = 'close-button';
+            closeButton.innerHTML = '×';
+            document.body.appendChild(closeButton);
+
+            // Добавляем класс для увеличения
+            image.classList.add('zoomed');
+            overlay.classList.add('visible');
+
+            // Обработчики закрытия
+            overlay.addEventListener('click', () => closeZoom(image));
+            closeButton.addEventListener('click', () => closeZoom(image));
+            
+            // Обработчик клавиши ESC
+            document.addEventListener('keydown', function escHandler(e) {
+                if (e.key === 'Escape') {
+                    closeZoom(image);
+                    document.removeEventListener('keydown', escHandler);
+                }
+            });
+        }
+
+        function closeZoom(image) {
+            image.classList.remove('zoomed');
+            const overlay = document.querySelector('.overlay');
+            const closeButton = document.querySelector('.close-button');
+            
+            if (overlay) {
+                overlay.classList.remove('visible');
+                setTimeout(() => overlay.remove(), 300);
+            }
+            
+            if (closeButton) {
+                closeButton.remove();
+            }
+        }
+    </script>
 </body>
 </html>
